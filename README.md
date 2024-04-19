@@ -2,6 +2,202 @@
 
 Craving insights from your Non-Fungible Tokens (NFTs)? Dive deep into the characteristic traits of your collection and bring the hidden gems to the surface with our LSP8 app Rarity Lib. This powerful tool calculates rarity scores, updates a database with these scores, and assigns unique ranks for each NFT.
 
+## Usage
+
+```typescript
+import { AssetBase, IEquationOptions, calculateRanking } from 'lsp8.app.rarity-lib';
+
+const assets: AssetBase[] = [
+    {
+        tokenId: '1',
+        tokenName: 'Warrior 1',
+        tokenAttributes: [
+            { key: 'Weapon', value: 'Axe', type: 'STRING' },
+            { key: 'Armor', value: 'Cloth', type: 'STRING' }
+        ],
+        tokenImage: 'https://image.com/1',
+        assetName: 'Excalibur'
+    },
+    {
+        tokenId: '2',
+        tokenName: 'Warrior 2',
+        tokenAttributes: [
+            { key: 'Weapon', value: 'Sword', type: 'STRING' },
+            { key: 'Armor', value: 'Plate', type: 'STRING' }
+        ],
+        tokenImage: 'https://image.com/2',
+        assetName: 'Aegis'
+    },
+    {
+        tokenId: '3',
+        tokenName: 'Warrior 3',
+        tokenAttributes: [
+            { key: 'Weapon', value: 'Wand', type: 'STRING' },
+            { key: 'Armor', value: 'Cloth', type: 'STRING' }
+        ],
+        tokenImage: 'https://image.com/2',
+        assetName: 'Aegis'
+    },
+    {
+        tokenId: '4',
+        tokenName: 'Warrior 4',
+        tokenAttributes: [
+            { key: 'Profession', value: 'Wizard', type: 'STRING' },
+            { key: 'Weapon', value: 'Wand', type: 'STRING' },
+            { key: 'Armor', value: 'Cloth', type: 'STRING' }
+        ],
+        tokenImage: 'https://image.com/2',
+        assetName: 'Aegis'
+    }
+];
+
+const options: IEquationOptions = {
+    useTraitCount: true,
+    useNormalization: true,
+    algorithm: 'lsp8Generic',
+    nonUniqueRanking: true
+};
+
+const ranking = calculateRanking(assets, options);
+console.log(JSON.stringify(ranking, null, 2));
+
+```
+
+will result into:
+```json5
+{
+  "traitFrequencies": {
+    "Weapon": {
+      "Axe": 1,
+      "Sword": 1,
+      "Wand": 2
+    },
+    "Armor": {
+      "Cloth": 3,
+      "Plate": 1
+    },
+    "TraitCount": {
+      "2": 3,
+      "3": 1
+    },
+    "Profession": {
+      "Wizard": 1
+    }
+  },
+  "enrichedAssets": [
+    {
+      "tokenImage": "https://image.com/1",
+      "tokenId": "1",
+      "tokenName": "Warrior 1",
+      "assetName": "Excalibur",
+      "score": 6.666666666666666,
+      "rank": 3,
+      "meta": {},
+      "tokenAttributes": [
+        {
+          "key": "Weapon",
+          "value": "Axe",
+          "percentage": 25
+        },
+        {
+          "key": "Armor",
+          "value": "Cloth",
+          "percentage": 75
+        },
+        {
+          "key": "TraitCount",
+          "value": "2",
+          "percentage": 75
+        }
+      ]
+    },
+    {
+      "tokenImage": "https://image.com/2",
+      "tokenId": "2",
+      "tokenName": "Warrior 2",
+      "assetName": "Aegis",
+      "score": 9.333333333333334,
+      "rank": 2,
+      "meta": {},
+      "tokenAttributes": [
+        {
+          "key": "Weapon",
+          "value": "Sword",
+          "percentage": 25
+        },
+        {
+          "key": "Armor",
+          "value": "Plate",
+          "percentage": 25
+        },
+        {
+          "key": "TraitCount",
+          "value": "2",
+          "percentage": 75
+        }
+      ]
+    },
+    {
+      "tokenImage": "https://image.com/2",
+      "tokenId": "3",
+      "tokenName": "Warrior 3",
+      "assetName": "Aegis",
+      "score": 4.666666666666666,
+      "rank": 4,
+      "meta": {},
+      "tokenAttributes": [
+        {
+          "key": "Weapon",
+          "value": "Wand",
+          "percentage": 50
+        },
+        {
+          "key": "Armor",
+          "value": "Cloth",
+          "percentage": 75
+        },
+        {
+          "key": "TraitCount",
+          "value": "2",
+          "percentage": 75
+        }
+      ]
+    },
+    {
+      "tokenImage": "https://image.com/2",
+      "tokenId": "4",
+      "tokenName": "Warrior 4",
+      "assetName": "Aegis",
+      "score": 11.333333333333332,
+      "rank": 1,
+      "meta": {},
+      "tokenAttributes": [
+        {
+          "key": "Profession",
+          "value": "Wizard",
+          "percentage": 25
+        },
+        {
+          "key": "Weapon",
+          "value": "Wand",
+          "percentage": 50
+        },
+        {
+          "key": "Armor",
+          "value": "Cloth",
+          "percentage": 75
+        },
+        {
+          "key": "TraitCount",
+          "value": "3",
+          "percentage": 25
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## Exemplifying NFT Characteristics with "TraitCount"
 Adding a poignant novel trait called "TraitCount" to your NFTs is made simple. It mimics the number of traits each NFT possesses.
 

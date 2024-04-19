@@ -1,56 +1,49 @@
-export interface IAssetBase {
-    assetAddress: string;
-    assetOwnerAddress: string;
+interface IAssetBase {
     assetName: string;
-    assetSymbol: string;
-    assetImage: string;
-    assetIcon: string;
-    assetDescription: string;
-    assetTags: string[];
-    assetContractType: 'LSP7' | 'LSP8';
     tokenId: string;
-    tokenIdType: number;
     tokenImage: string;
-    tokenDescription: string;
     tokenName: string;
     tokenAttributes: ITokenAttribute[];
 }
 
-export interface IAssetEnriched {
-    tokenId: string;
-    tokenName: string;
-    tokenImage: string;
-    assetName: string;
+export interface IAssetEnriched extends IAssetBase {
     rank: number;
     score: number;
     tokenAttributes: ITokenAttributeEnriched[];
     meta: Record<string, unknown>;
 }
 
-export interface ITokenAttributeEnriched {
-    key: string;
-    value: string;
-    percentage: number;
-    price?: number;
-}
-
-export interface ITokenAttribute {
+interface ITokenAttribute {
     key: string;
     value: string;
     type: 'STRING' | 'NUMBER';
 }
 
-export interface TraitFrequency {
+export interface ITokenAttributeEnriched extends ITokenAttribute {
+    percentage: number;
+    price?: number;
+}
+
+export interface ITraitFrequency {
     [key: string]: {
         [value: string]: number;
     };
 }
 
-export interface RarityScore {
+export interface IRarityScore {
     id: string;
     score: number;
     rank?: number;
 }
+
+export interface IEquationOptions {
+    algorithm: RarityEquation;
+    nonUniqueRanking: boolean;
+    useTraitCount: boolean;
+    useNormalization: boolean;
+}
+
+export type AttributeWeightMap = Record<string, number>;
 
 export type RarityEquation =
     | 'harmonicMean'
@@ -60,6 +53,4 @@ export type RarityEquation =
     | 'sumOfScores'
     | 'lsp8Generic';
 
-export interface IAttributeWeightMap {
-    [attributeKey: string]: number;
-}
+export type AssetBase = Pick<IAssetBase, 'tokenAttributes' | 'tokenId' | 'tokenImage' | 'tokenName' | 'assetName'>;

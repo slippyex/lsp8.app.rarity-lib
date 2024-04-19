@@ -1,16 +1,16 @@
-import { IAssetBase, IAttributeWeightMap, RarityEquation, RarityScore, TraitFrequency } from 'index';
+import { AssetBase, AttributeWeightMap, RarityEquation, IRarityScore, ITraitFrequency } from 'index';
 import { calculatePercentages, calculateTraitFrequencies } from '../utils/helpers';
 
 export class RarityScorer {
     normalized: boolean;
     scoringMethod: RarityEquation;
     nonUniqueRanking: boolean;
-    attributeWeights: IAttributeWeightMap;
+    attributeWeights: AttributeWeightMap;
     constructor(
         normalized = true,
         scoringMethod: RarityEquation,
         nonUniqueRanking = false,
-        attributeWeights: IAttributeWeightMap = {}
+        attributeWeights: AttributeWeightMap = {}
     ) {
         this.normalized = normalized;
         this.scoringMethod = scoringMethod;
@@ -18,10 +18,10 @@ export class RarityScorer {
         this.attributeWeights = attributeWeights;
     }
 
-    public determineRankings(assets: IAssetBase[]): {
-        traitFrequencies: TraitFrequency;
-        traitPercentages: TraitFrequency;
-        scores: RarityScore[];
+    public determineRankings(assets: AssetBase[]): {
+        traitFrequencies: ITraitFrequency;
+        traitPercentages: ITraitFrequency;
+        scores: IRarityScore[];
     } {
         const frequencies = calculateTraitFrequencies(assets);
         const traitPercentages = calculatePercentages(frequencies, assets.length);
@@ -33,7 +33,7 @@ export class RarityScorer {
         });
         const weights = allUniqueAttributes.map(attr => this.attributeWeights[attr] || 1);
 
-        const rarityScores: RarityScore[] = assets.map(asset => ({
+        const rarityScores: IRarityScore[] = assets.map(asset => ({
             id: asset.tokenId,
             score: this.calculateRarityScore(asset, frequencies, assets.length, weights)
         }));
@@ -44,7 +44,7 @@ export class RarityScorer {
         };
     }
 
-    private calculateCollectionEntropy(frequencies: TraitFrequency, totalAssets: number): number {
+    private calculateCollectionEntropy(frequencies: ITraitFrequency, totalAssets: number): number {
         return Object.values(frequencies).reduce((entropy, trait) => {
             return (
                 entropy -
@@ -57,8 +57,8 @@ export class RarityScorer {
     }
 
     private calculateRarityScore(
-        asset: IAssetBase,
-        frequencies: TraitFrequency,
+        asset: AssetBase,
+        frequencies: ITraitFrequency,
         totalAssets: number,
         weights: number[]
     ): number {
@@ -130,7 +130,7 @@ export class RarityScorer {
         return scores.reduce((acc, score, idx) => acc + score * weights[idx], 0);
     }
 
-    private lsp8Generic(nft: IAssetBase, frequencies: TraitFrequency, totalNFTs: number): number {
+    private lsp8Generic(nft: AssetBase, frequencies: ITraitFrequency, totalNFTs: number): number {
         return nft.tokenAttributes.reduce((acc, { key, value }) => {
             const frequency = frequencies[key][value];
             const rarity = (1 / frequency) * totalNFTs; // Normalizing based on total NFTs
@@ -138,7 +138,7 @@ export class RarityScorer {
         }, 0);
     }
 
-    private assignRanks(rarityScores: RarityScore[]): RarityScore[] {
+    private assignRanks(rarityScores: IRarityScore[]): IRarityScore[] {
         rarityScores.sort((a, b) => b.score - a.score);
 
         if (!this.nonUniqueRanking) {

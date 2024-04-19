@@ -1,6 +1,6 @@
-import { IAssetBase, TraitFrequency } from 'index';
+import { AssetBase, ITraitFrequency } from 'index';
 
-export function addTraitCountAsTrait(nfts: IAssetBase[]): void {
+export function addTraitCountAsTrait(nfts: AssetBase[]): void {
     nfts.forEach(nft => {
         let traitCount = Object.keys(nft.tokenAttributes).length;
         if (nft.tokenAttributes.find(ta => ta.key === 'STATUS' && ta.value === 'UNREVEALED') && traitCount > 1)
@@ -9,8 +9,8 @@ export function addTraitCountAsTrait(nfts: IAssetBase[]): void {
     });
 }
 
-export function calculatePercentages(traitFrequencies: TraitFrequency, assetsTotal: number) {
-    const percentages: TraitFrequency = {};
+export function calculatePercentages(traitFrequencies: ITraitFrequency, assetsTotal: number) {
+    const percentages: ITraitFrequency = {};
     for (const category in traitFrequencies) {
         percentages[category] = {};
         for (const trait in traitFrequencies[category]) {
@@ -22,8 +22,8 @@ export function calculatePercentages(traitFrequencies: TraitFrequency, assetsTot
     return percentages;
 }
 
-export function calculateTraitFrequencies(nfts: IAssetBase[]): TraitFrequency {
-    const frequencies: TraitFrequency = {};
+export function calculateTraitFrequencies(nfts: AssetBase[]): ITraitFrequency {
+    const frequencies: ITraitFrequency = {};
     nfts.forEach(nft => {
         nft.tokenAttributes.forEach(({ key, value }) => {
             if (!frequencies[key]) {

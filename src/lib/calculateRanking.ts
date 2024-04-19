@@ -1,17 +1,11 @@
-import { IAssetBase, IAssetEnriched, RarityEquation, RarityScore, TraitFrequency } from 'index';
-import { addTraitCountAsTrait, calculatePercentages, calculateTraitFrequencies } from '../utils/helpers';
+import { AssetBase, IAssetEnriched, ITraitFrequency, IEquationOptions } from 'index';
+import { addTraitCountAsTrait } from '../utils/helpers';
 import { RarityScorer } from './RarityScorer';
 
-interface IEquationOptions {
-    algorithm: RarityEquation;
-    nonUniqueRanking: boolean;
-    useTraitCount: boolean;
-    useNormalization: boolean;
-}
 export function calculateRanking(
-    assets: IAssetBase[],
+    assets: AssetBase[],
     options: IEquationOptions
-): { traitFrequencies: TraitFrequency; enrichedAssets: IAssetEnriched[] } {
+): { traitFrequencies: ITraitFrequency; enrichedAssets: IAssetEnriched[] } {
     assets.forEach(fc => {
         if (!fc.tokenAttributes) {
             fc.tokenAttributes = [{ key: 'STATUS', value: 'UNREVEALED', type: 'STRING' }];
@@ -45,6 +39,6 @@ export function calculateRanking(
                     };
                 })
             };
-        })
+        }) as IAssetEnriched[]
     };
 }
