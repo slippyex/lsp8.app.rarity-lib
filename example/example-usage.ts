@@ -1,4 +1,4 @@
-import { AssetBase, IEquationOptions } from '../src/@types';
+import { AssetBase, IEquationOptions } from '../src';
 import { calculateRanking } from '../src';
 
 const assets: AssetBase[] = [

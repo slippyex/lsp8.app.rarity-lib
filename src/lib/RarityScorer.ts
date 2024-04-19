@@ -138,7 +138,7 @@ export class RarityScorer {
         }, 0);
     }
 
-    private assignRanks(rarityScores: IRarityScore[]): IRarityScore[] {
+    public assignRanks(rarityScores: IRarityScore[]): IRarityScore[] {
         rarityScores.sort((a, b) => b.score - a.score);
 
         if (!this.nonUniqueRanking) {
