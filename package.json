@@ -1,0 +1,91 @@
+{
+  "name": "lsp8-app-rarity-lib",
+  "version": "1.0.0",
+  "description": "Tiny, zero-dependencies, package which tries to calculate rarity and rankings for a given NFT 2.0 LSP8 asset collection",
+  "main": ".build/src/index.js",
+  "files": [
+    ".build/src"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "eslint src -f table",
+    "format": "prettier --write '{src,tests}/**/*.ts'",
+    "test": "jest --coverage=true",
+    "test:ci": "CI=true jest --coverage=true"
+  },
+  "author": "Markus Velten",
+  "repository": "https://github.com/slippyex/lsp8-app-rarity-lib.git",
+  "homepage": "https://lsp8.app",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "ranking",
+    "rarity",
+    "nft",
+    "nft2.0",
+    "lsp8",
+    "open-rarity"
+  ],
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "env": {
+      "browser": false,
+      "es6": true,
+      "node": true,
+      "jest": true
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.3",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.18.0",
+    "eslint-formatter-table": "^7.32.1",
+    "jest": "^28.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^3.0.3",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.2",
+    "typescript": "^5"
+  },
+  "pre-commit": [
+    "format",
+    "lint",
+    "build",
+    "test"
+  ],
+  "prettier": {
+    "parser": "typescript",
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "tabWidth": 4,
+    "arrowParens": "avoid"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text",
+      "cobertura",
+      "html"
+    ],
+    "testEnvironment": "node",
+    "preset": "ts-jest",
+    "testMatch": [
+      "**/tests/**/*.test.ts"
+    ],
+    "testTimeout": 20000
+  }
+}
