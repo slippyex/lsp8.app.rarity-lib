@@ -1,5 +1,5 @@
 {
-  "name": "lsp8-app-rarity-lib",
+  "name": "lsp8.app.rarity-lib",
   "version": "1.0.0",
   "description": "Tiny, zero-dependencies, package which tries to calculate rarity and rankings for a given NFT 2.0 LSP8 asset collection",
   "main": ".build/src/index.js",
@@ -18,7 +18,7 @@
     "test:ci": "CI=true jest --coverage=true"
   },
   "author": "Markus Velten",
-  "repository": "https://github.com/slippyex/lsp8-app-rarity-lib.git",
+  "repository": "https://github.com/slippyex/lsp8.app.rarity-lib.git",
   "homepage": "https://lsp8.app",
   "license": "MIT",
   "private": false,
